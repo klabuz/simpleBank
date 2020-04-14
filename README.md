@@ -1,1 +1,1 @@
-# simpleBank
+# Simple Bank [project]

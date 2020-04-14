@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Log in to your account.";
+}
+
+@model SimpleBank.Models.UserViewModel
+
+<div class="row">
+    <div class="col-sm-6">
+        <h2>@ViewBag.Title</h2>
+        <form asp-action="Login" asp-controller="User" method="post">
+            <div class="form-group">
+                <label for="UserName">UserName:</label>
+                <input class="form-control" asp-for="Log.UserName">
+                <span class="text-danger" asp-validation-for="Log.UserName"></span>
+            </div>
+            <div class="form-group">
+                <label for="PasswordHash">Password:</label>
+                <input class="form-control" asp-for="Log.PasswordHash">
+                <span class="text-danger" asp-validation-for="Log.PasswordHash"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+

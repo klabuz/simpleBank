@@ -1,0 +1,14 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+
+namespace SimpleBank.Models
+{
+    public class SimpleBankContext : DbContext
+    {
+        public SimpleBankContext(DbContextOptions<SimpleBankContext> options) : base(options) { }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+    }
+}
