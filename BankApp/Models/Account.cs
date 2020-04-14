@@ -11,6 +11,8 @@ namespace SimpleBank.Models
         public string Type { get; set; }
         public string Name { get; set; }
         public int Balance { get; set; }
+        //public int AccountNumber { get; set; }
+        //public int RoutingNumber { get; set; }
         public int CardNumber { get; set; }
         public int PIN { get; set; }
         public bool isMain { get; set; }
@@ -21,6 +23,7 @@ namespace SimpleBank.Models
         {
             CreatedDate = DateTime.Now;
             UpdatedDate = DateTime.Now;
+            //RoutingNumber = 19920705;
             Transactions = new List<Transaction>();
         }
     }

@@ -16,22 +16,9 @@ namespace SimpleBank.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        [Route("signup")]
-        public IActionResult SignUp()
-        {
-            return View("SignUp");
-        }
-
-        [HttpGet]
-        [Route("login")]
-        public IActionResult Login()
-        {
-            return View("Login");
-        }
 
         [HttpPost]
-        [Route("signup")]
+        [Route("sign-up")]
         public IActionResult SignUp(UserViewModel user)
         {
             SignUp SUP = user.SUP;
