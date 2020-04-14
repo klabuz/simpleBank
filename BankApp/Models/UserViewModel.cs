@@ -12,68 +12,70 @@ namespace SimpleBank.Models
     {
         [Required]
         [MinLength(2, ErrorMessage = "Your first name must contain at least 2 characters.")]
-        [Display(Name = "First Name")]
+        [Display(Name = "first name")]
         public string FirstName { get; set; }
 
         [Required]
         [MinLength(2, ErrorMessage = "Your last name must contain at least 2 characters.")]
-        [Display(Name = "Last Name")]
+        [Display(Name = "last name")]
         public string LastName { get; set; }
 
         [Required]
         [MinLength(2, ErrorMessage = "Your username name must contain at least 2 characters.")]
-        [Display(Name = "Username")]
+        [Display(Name = "username")]
         public string UserName { get; set; }
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email Address")]
+        [Display(Name = "email address")]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "phone number")]
         public string Phone { get; set; }
 
         [Required]
         [MinLength(8, ErrorMessage = "Your password must contain at least 8 characters.")]
         [Compare("ConfirmPassword", ErrorMessage = "Passwords don't match.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "password")]
         public string PasswordHash { get; set; }
 
         [Required]
         [Compare("PasswordHash", ErrorMessage = "Passwords don't match.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm Password")]
+        [Display(Name = "confirm password")]
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "State")]
+        [Display(Name = "state")]
         public string State { get; set; }
 
         [Required]
-        [Display(Name = "Zip Code")]
+        [Display(Name = "zip code")]
         public string ZipCode { get; set; }
 
         [Required]
-        [Display(Name = "Street Address")]
+        [Display(Name = "street address")]
         public string StreetAddress { get; set; }
 
         [Required]
-        [Display(Name = "City")]
+        [Display(Name = "city")]
         public string City { get; set; }
 
         [Required]
-        [Display(Name = "Country")]
+        [Display(Name = "country")]
         public string Country { get; set; }
     }
 
     public class Login : BaseEntity
     {
         [Required]
+        [Display(Name = "username")]
         public string UserName { get; set; }
 
         [Required]
+        [Display(Name = "password")]
         [MinLength(8, ErrorMessage = "Your password must contain at least 8 characters.")]
         [DataType(DataType.Password)]
         public string PasswordHash { get; set; }

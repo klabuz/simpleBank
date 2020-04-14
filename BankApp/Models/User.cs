@@ -26,7 +26,8 @@ namespace SimpleBank.Models
         public string City { get; set; }
         public string Country {get;set;}
         //public string SSN { get; set; }
-
+        //public bool isEmployee { get; set; }
+        //public bool isManager { get; set; }
         public List<Account> Accounts { get; set; }
 
         public User()

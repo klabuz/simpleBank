@@ -46,6 +46,7 @@ namespace SimpleBank.Controllers
                     StreetAddress = SUP.StreetAddress,
                     State = SUP.State,
                     City = SUP.City,
+                    ZipCode = SUP.ZipCode,
                     Country = SUP.Country         
                 };
 
