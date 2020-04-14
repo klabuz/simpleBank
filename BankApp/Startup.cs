@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleBank.Models;
 
-namespace BankApp
+namespace SimpleBank
 {
     public class Startup
     {
@@ -19,7 +20,8 @@ namespace BankApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SimpleBankContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
+            var connection = Configuration["DbConnectionString"];
+            services.AddDbContext<SimpleBankContext>(options => options.UseSqlServer(connection));
             services.AddControllersWithViews();
             services.AddSession();
             services.AddMvc();
@@ -40,13 +42,9 @@ namespace BankApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseSession();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -56,3 +54,5 @@ namespace BankApp
         }
     }
 }
+
+

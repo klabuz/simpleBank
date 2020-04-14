@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleBank.Models;
-using System.Linq;
+using System.Diagnostics;
 
 namespace SimpleBank.Controllers
 {
@@ -15,9 +15,14 @@ namespace SimpleBank.Controllers
 
         [HttpGet]
         [Route("")]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

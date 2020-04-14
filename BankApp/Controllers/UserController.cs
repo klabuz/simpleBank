@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SimpleBank.Models;
+using System.Diagnostics;
 using System.Linq;
-using System;
-using Microsoft.AspNetCore.Http;
 
 namespace SimpleBank.Controllers
 {
@@ -18,21 +18,21 @@ namespace SimpleBank.Controllers
 
         [HttpGet]
         [Route("signup")]
-        public ActionResult SignUp()
+        public IActionResult SignUp()
         {
             return View("SignUp");
         }
 
         [HttpGet]
         [Route("login")]
-        public ActionResult Login()
+        public IActionResult Login()
         {
             return View("Login");
         }
 
         [HttpPost]
-        [Route("register")]
-        public ActionResult SignUp(UserViewModel user)
+        [Route("signup")]
+        public IActionResult SignUp(UserViewModel user)
         {
             SignUp SUP = user.SUP;
 
@@ -63,20 +63,20 @@ namespace SimpleBank.Controllers
                     StreetAddress = SUP.StreetAddress
                 };
 
-                //_context.Add(newUser);
-                //_context.SaveChanges();
+                _context.Add(newUser);
+                _context.SaveChanges();
 
                 User currentUser = _context.Users.SingleOrDefault(u => u.Email == newUser.Email);
                 HttpContext.Session.SetInt32("UserId", currentUser.Id);
 
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Dashboard", "Dashboard");
             }
             return View("Index", "Home");
         }
 
         [HttpPost]
         [Route("login")]
-        public ActionResult Login(UserViewModel user)
+        public IActionResult Login(UserViewModel user)
         {
             Login Log = user.Log;
             if (ModelState.IsValid)
@@ -89,7 +89,7 @@ namespace SimpleBank.Controllers
                     if (0 != Hasher.VerifyHashedPassword(currentUser, currentUser.PasswordHash, Log.PasswordHash))
                     {
                         HttpContext.Session.SetInt32("UserId", currentUser.Id);
-                        return RedirectToAction("Index", "Dashboard");
+                        return RedirectToAction("Dashboard", "Dashboard");
                     }
                     else
                     {
@@ -106,10 +106,15 @@ namespace SimpleBank.Controllers
 
         [HttpGet]
         [Route("logout")]
-        public ActionResult Logout()
+        public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return View("Index", "Home");
+        }
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
     }
