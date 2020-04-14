@@ -17,7 +17,7 @@ namespace SimpleBank.Controllers
         [Route("dashboard")]
         public IActionResult Dashboard()
         {
-            return View();
+            return View("Index");
         }
 
         public IActionResult Error()

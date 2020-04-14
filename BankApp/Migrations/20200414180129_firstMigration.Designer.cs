@@ -10,7 +10,7 @@ using SimpleBank.Models;
 namespace SimpleBank.Migrations
 {
     [DbContext(typeof(SimpleBankContext))]
-    [Migration("20200414172441_firstMigration")]
+    [Migration("20200414180129_firstMigration")]
     partial class firstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

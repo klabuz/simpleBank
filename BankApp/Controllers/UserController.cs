@@ -18,7 +18,7 @@ namespace SimpleBank.Controllers
 
 
         [HttpPost]
-        [Route("sign-up")]
+        [Route("signup")]
         public IActionResult SignUp(UserViewModel user)
         {
             SignUp SUP = user.SUP;
@@ -43,21 +43,21 @@ namespace SimpleBank.Controllers
                     PasswordHash = SUP.PasswordHash,
                     Phone = SUP.Phone,
                     Email = SUP.Email,
+                    StreetAddress = SUP.StreetAddress,
                     State = SUP.State,
                     City = SUP.City,
-                    Country = SUP.Country,
-                    StreetAddress = SUP.StreetAddress
+                    Country = SUP.Country         
                 };
 
                 _context.Add(newUser);
                 _context.SaveChanges();
 
                 User currentUser = _context.Users.SingleOrDefault(u => u.Email == newUser.Email);
-                HttpContext.Session.SetInt32("UserId", currentUser.Id);
+                HttpContext.Session.SetInt32("Id", currentUser.Id);
 
                 return RedirectToAction("Dashboard", "Dashboard");
             }
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -65,7 +65,7 @@ namespace SimpleBank.Controllers
         public IActionResult Login(UserViewModel user)
         {
             Login Log = user.Log;
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var currentUser = _context.Users.SingleOrDefault(u => u.UserName == Log.UserName);
                 if (currentUser != null && Log.PasswordHash != null)
@@ -74,7 +74,7 @@ namespace SimpleBank.Controllers
 
                     if (0 != Hasher.VerifyHashedPassword(currentUser, currentUser.PasswordHash, Log.PasswordHash))
                     {
-                        HttpContext.Session.SetInt32("UserId", currentUser.Id);
+                        HttpContext.Session.SetInt32("Id", currentUser.Id);
                         return RedirectToAction("Dashboard", "Dashboard");
                     }
                     else
@@ -87,7 +87,7 @@ namespace SimpleBank.Controllers
                     ModelState.AddModelError("Log.UserName", "This username doesn't exist.");
                 }
             }
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -95,7 +95,7 @@ namespace SimpleBank.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Error()

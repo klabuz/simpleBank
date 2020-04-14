@@ -2,6 +2,12 @@
 
 namespace SimpleBank.Models
 {
+    public class UserViewModel : BaseEntity
+    {
+        public SignUp SUP { get; set; }
+        public Login Log { get; set; }
+    }
+
     public class SignUp : BaseEntity
     {
         [Required]
@@ -71,11 +77,5 @@ namespace SimpleBank.Models
         [MinLength(8, ErrorMessage = "Your password must contain at least 8 characters.")]
         [DataType(DataType.Password)]
         public string PasswordHash { get; set; }
-    }
-
-    public class UserViewModel : BaseEntity
-    {
-        public SignUp SUP { get; set; }
-        public Login Log { get; set; }
     }
 }

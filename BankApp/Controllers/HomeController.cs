@@ -21,7 +21,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpGet]
-        [Route("sign-up")]
+        [Route("signup")]
         public IActionResult SignUp()
         {
             return View("SignUp");
