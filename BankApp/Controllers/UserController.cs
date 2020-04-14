@@ -41,7 +41,6 @@ namespace SimpleBank.Controllers
                 User RegisterUser = _context.Users.SingleOrDefault(i => i.Email == SUP.Email);
                 if (RegisterUser != null)
                 {
-                    // ViewBag.Message = "This email exists. Please use a different email.";
                     ModelState.AddModelError("SUP.Email", "This email exists. Please use a different email.");
 
                     return View("SignUp");
