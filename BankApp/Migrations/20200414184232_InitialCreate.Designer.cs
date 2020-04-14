@@ -10,8 +10,8 @@ using SimpleBank.Models;
 namespace SimpleBank.Migrations
 {
     [DbContext(typeof(SimpleBankContext))]
-    [Migration("20200414180129_firstMigration")]
-    partial class firstMigration
+    [Migration("20200414184232_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace SimpleBank.Migrations
 
             modelBuilder.Entity("SimpleBank.Models.Account", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AccountId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -55,7 +55,7 @@ namespace SimpleBank.Migrations
                     b.Property<bool>("isMain")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("AccountId");
 
                     b.HasIndex("UserId");
 
@@ -64,7 +64,7 @@ namespace SimpleBank.Migrations
 
             modelBuilder.Entity("SimpleBank.Models.Transaction", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -93,7 +93,7 @@ namespace SimpleBank.Migrations
                     b.Property<bool>("isPending")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("TransactionId");
 
                     b.HasIndex("AccountId");
 
@@ -102,7 +102,7 @@ namespace SimpleBank.Migrations
 
             modelBuilder.Entity("SimpleBank.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -140,7 +140,7 @@ namespace SimpleBank.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int?>("UserId1")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
@@ -149,9 +149,9 @@ namespace SimpleBank.Migrations
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Users");
                 });
@@ -174,7 +174,7 @@ namespace SimpleBank.Migrations
                 {
                     b.HasOne("SimpleBank.Models.User", null)
                         .WithMany("Contacts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

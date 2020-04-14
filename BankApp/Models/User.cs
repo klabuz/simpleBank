@@ -13,7 +13,7 @@ namespace SimpleBank.Models
     public class User : BaseEntity
     {
         [Key]
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string FirstName { get; set; }
@@ -28,14 +28,12 @@ namespace SimpleBank.Models
         //public string SSN { get; set; }
 
         public List<Account> Accounts { get; set; }
-        public List<User> Contacts { get; set; }
 
         public User()
         {
             CreatedDate = DateTime.Now;
             UpdatedDate = DateTime.Now;
             Accounts = new List<Account>();
-            Contacts = new List<User>();
         }
     }
 }

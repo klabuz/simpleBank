@@ -36,13 +36,13 @@ namespace SimpleBank.Models
 
         [Required]
         [MinLength(8, ErrorMessage = "Your password must contain at least 8 characters.")]
-        [Compare("cw_password", ErrorMessage = "Passwords don't match.")]
+        [Compare("ConfirmPassword", ErrorMessage = "Passwords don't match.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string PasswordHash { get; set; }
 
         [Required]
-        [Compare("Password", ErrorMessage = "Passwords don't match.")]
+        [Compare("PasswordHash", ErrorMessage = "Passwords don't match.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }

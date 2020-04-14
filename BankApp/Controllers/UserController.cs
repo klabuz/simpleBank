@@ -53,11 +53,11 @@ namespace SimpleBank.Controllers
                 _context.SaveChanges();
 
                 User currentUser = _context.Users.SingleOrDefault(u => u.Email == newUser.Email);
-                HttpContext.Session.SetInt32("Id", currentUser.Id);
+                HttpContext.Session.SetInt32("UserId", currentUser.UserId);
 
                 return RedirectToAction("Dashboard", "Dashboard");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SignUp", "Home");
         }
 
         [HttpPost]
@@ -65,7 +65,7 @@ namespace SimpleBank.Controllers
         public IActionResult Login(UserViewModel user)
         {
             Login Log = user.Log;
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var currentUser = _context.Users.SingleOrDefault(u => u.UserName == Log.UserName);
                 if (currentUser != null && Log.PasswordHash != null)
@@ -74,7 +74,7 @@ namespace SimpleBank.Controllers
 
                     if (0 != Hasher.VerifyHashedPassword(currentUser, currentUser.PasswordHash, Log.PasswordHash))
                     {
-                        HttpContext.Session.SetInt32("Id", currentUser.Id);
+                        HttpContext.Session.SetInt32("UserId", currentUser.UserId);
                         return RedirectToAction("Dashboard", "Dashboard");
                     }
                     else
@@ -87,7 +87,7 @@ namespace SimpleBank.Controllers
                     ModelState.AddModelError("Log.UserName", "This username doesn't exist.");
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpGet]
