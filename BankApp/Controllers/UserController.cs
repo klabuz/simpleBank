@@ -56,7 +56,7 @@ namespace SimpleBank.Controllers
                 User currentUser = _context.Users.SingleOrDefault(u => u.Email == newUser.Email);
                 HttpContext.Session.SetInt32("UserId", currentUser.UserId);
 
-                return RedirectToAction("Dashboard", "Dashboard");
+                return RedirectToAction("Dashboard", "Dashboard", new { userId = currentUser.UserId });
             }
             return RedirectToAction("SignUp", "Home");
         }
@@ -76,7 +76,7 @@ namespace SimpleBank.Controllers
                     if (0 != Hasher.VerifyHashedPassword(currentUser, currentUser.PasswordHash, Log.PasswordHash))
                     {
                         HttpContext.Session.SetInt32("UserId", currentUser.UserId);
-                        return RedirectToAction("Dashboard", "Dashboard");
+                        return RedirectToAction("Dashboard", "Dashboard", new { userId = currentUser.UserId });
                     }
                     else
                     {

@@ -21,8 +21,16 @@
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
-            <li>@Html.ActionLink("Login", "Login", "Home")</li>
+            @if (ViewBag.UserId > 0)
+            {
+                <li>@Html.ActionLink("Dashboard", "Dashboard", "Dashboard", new { userId = ViewBag.UserId})</li>
+                <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Sign Up", "SignUp", "Home")</li>
+                <li>@Html.ActionLink("Login", "Login", "Home")</li>
+            }
         </ul>
     </div>
     <div class="container body-content">

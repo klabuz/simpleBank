@@ -1,5 +1,15 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
 }
+@model SimpleBank.Models.User
 
-<h2>@ViewBag.Title</h2>
+<h1>@ViewBag.Title</h1>
+
+@if(ViewBag.UserId > 0)
+{
+    <h3>Hello!</h3>
+}
+else
+{
+    <h3>Sorry, you don't have permission to see this page.</h3>
+}

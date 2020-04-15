@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleBank.Models;
 using System.Diagnostics;
+using System.Linq;
 
 namespace SimpleBank.Controllers
 {
@@ -15,8 +16,12 @@ namespace SimpleBank.Controllers
 
         [HttpGet]
         [Route("dashboard")]
-        public IActionResult Dashboard()
+        public IActionResult Dashboard(int userId)
         {
+            var currentUser = _context.Users.Where(u => u.UserId == userId);
+
+            ViewBag.UserId = userId;
+
             return View("Index");
         }
 

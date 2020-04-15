@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SimpleBank.Models;
 using System.Diagnostics;
 
@@ -17,6 +18,7 @@ namespace SimpleBank.Controllers
         [Route("")]
         public IActionResult Index()
         {
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
             return View();
         }
 
