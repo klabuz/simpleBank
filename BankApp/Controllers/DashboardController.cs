@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SimpleBank.Models;
 using System.Diagnostics;
 using System.Linq;
@@ -18,9 +19,16 @@ namespace SimpleBank.Controllers
         [Route("dashboard")]
         public IActionResult Dashboard(int userId)
         {
-            var currentUser = _context.Users.Where(u => u.UserId == userId);
+            var currentUser = _context.Users.Where(u => u.UserId == userId).SingleOrDefault();
 
-            ViewBag.UserId = userId;
+            //Reads current user id from session
+            ViewBag.CurrentUserId = HttpContext.Session.GetInt32("UserId");
+
+            if (currentUser != null)
+            {
+                ViewBag.UserId = currentUser.UserId;
+                ViewBag.UserName = currentUser.UserName;
+            }
 
             return View("Index");
         }

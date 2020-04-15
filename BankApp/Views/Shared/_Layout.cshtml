@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - road_runner</title>
+    <title>@ViewData["Title"] - Simple Bank</title>
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -20,7 +20,7 @@
         @Html.ActionLink("Simple Bank", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
     </div>
     <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav header-nav">
             @if (ViewBag.UserId > 0)
             {
                 <li>@Html.ActionLink("Dashboard", "Dashboard", "Dashboard", new { userId = ViewBag.UserId})</li>
