@@ -71,5 +71,9 @@ body {
 }
 
 .header-nav {
-    display: inline-block;
+    display: inline-block;  
+}
+
+.navbar-collapse {
+    margin-bottom: 20px;
 }
