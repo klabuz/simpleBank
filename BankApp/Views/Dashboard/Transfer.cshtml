@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Transfer Money";
+}
+@model SimpleBank.Models.User
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <form asp-action="TransferMoney" asp-controller="Account" method="post">
+                <h2>Transfer money from @ViewBag.From.Name</h2>
+                
+                <select name="TRA.ToAccount">
+                    <option value="" selected>Please choose account</option>
+                    @foreach (var a in ViewBag.Available)
+                    {
+                        <option value="@a.AccountId">@a.Name ($@a.Balance)</option>
+                    }
+                </select><br />
+                <input hidden value="@ViewBag.From.AccountId" name="TRA.FromAccount" />
+                <div class="form-group">
+                    <label for="TRA.Amount">Amount: (available $@ViewBag.From.Balance)</label>
+                    <input type="text" class="form-control" name="TRA.Amount">
+                    <span class="text-danger" asp-validation-for="TRA.Amount"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Transfer</button>
+            </form>
+        </div>
+    </div>

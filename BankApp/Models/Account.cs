@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SimpleBank.Models
 {
@@ -13,9 +14,10 @@ namespace SimpleBank.Models
         public int Balance { get; set; }
         //public int AccountNumber { get; set; }
         //public int RoutingNumber { get; set; }
-        public int CardNumber { get; set; }
-        public int PIN { get; set; }
+        public string CardNumber { get; set; }
+        public string PIN { get; set; }
         public bool isMain { get; set; }
+        public int UserId { get; set; }  
 
         public List<Transaction> Transactions { get; set; }
 

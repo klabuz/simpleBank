@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleBank.Models;
 
 namespace SimpleBank.Migrations
 {
     [DbContext(typeof(SimpleBankContext))]
-    partial class SimpleBankContextModelSnapshot : ModelSnapshot
+    [Migration("20200421020432_updateTransactions1")]
+    partial class updateTransactions1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,7 @@ namespace SimpleBank.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<int>("Amount")
@@ -75,6 +77,9 @@ namespace SimpleBank.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("FromAccountId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ReceiverId")
                         .HasColumnType("int");
@@ -87,9 +92,6 @@ namespace SimpleBank.Migrations
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("isSelfTransfer")
-                        .HasColumnType("bit");
 
                     b.HasKey("TransactionId");
 
@@ -160,11 +162,9 @@ namespace SimpleBank.Migrations
 
             modelBuilder.Entity("SimpleBank.Models.Transaction", b =>
                 {
-                    b.HasOne("SimpleBank.Models.Account", null)
+                    b.HasOne("SimpleBank.Models.Account", "Account")
                         .WithMany("Transactions")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
                 });
 #pragma warning restore 612, 618
         }

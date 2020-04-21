@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Open an Account";
+}
+
+@model SimpleBank.Models.AccountViewModel
+
+
+<div class="row">
+    <div class="col-sm-6">
+        <h2>@ViewBag.Title</h2>
+        <form asp-action="CreateAccount" asp-controller="Account" method="post">
+            <div class="form-group">
+                <label for="CRE.Type">Account Type:</label>
+                <input type="text" class="form-control" name="CRE.Type">
+                <span class="text-danger" asp-validation-for="CRE.Type"></span>
+            </div>
+            <div class="form-group">
+                <label for="CRE.Name">Account Name:</label>
+                <input type="text" class="form-control" name="CRE.Name">
+                <span class="text-danger" asp-validation-for="CRE.Name"></span>
+            </div>
+            <div class="form-group">
+                <label for="CRE.Balance">Balance:</label>
+                <input type="text" class="form-control" name="CRE.Balance">
+                <span class="text-danger" asp-validation-for="CRE.Balance"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Open</button>
+        </form>
+    </div>
+</div>

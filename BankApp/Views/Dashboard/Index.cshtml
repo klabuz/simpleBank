@@ -4,9 +4,27 @@
 @model SimpleBank.Models.User
 
 
-@if(ViewBag.UserId == ViewBag.CurrentUserId && ViewBag.CurrentUserId != null)
+@if (ViewBag.UserId == ViewBag.CurrentUserId && ViewBag.CurrentUserId != null)
 {
     <h3>Hello, @ViewBag.UserName!</h3>
+
+    <ul>
+        <li>@Html.ActionLink("Open an account", "CreateAccount", "Dashboard")</li>
+    </ul>
+
+    @if (ViewBag.accounts.Count > 0)
+    {
+        <h3>Your Accounts:</h3>
+        <ul>
+            @foreach (var a in ViewBag.accounts)
+            {
+                <li>    
+                    @a.Name - $@a.Balance
+                    <span>@Html.ActionLink("Tranfser", "Transfer", "Dashboard", new {accountId = @a.AccountId, userId = @ViewBag.UserId })</span>
+                </li>
+            }
+        </ul>
+    }
 }
 else
 {

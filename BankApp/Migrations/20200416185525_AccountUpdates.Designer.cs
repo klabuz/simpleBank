@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleBank.Models;
 
 namespace SimpleBank.Migrations
 {
     [DbContext(typeof(SimpleBankContext))]
-    partial class SimpleBankContextModelSnapshot : ModelSnapshot
+    [Migration("20200416185525_AccountUpdates")]
+    partial class AccountUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,7 @@ namespace SimpleBank.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<int>("Amount")
@@ -82,13 +84,13 @@ namespace SimpleBank.Migrations
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ToAccountId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("isSelfTransfer")
+                    b.Property<bool>("isFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isPending")
                         .HasColumnType("bit");
 
                     b.HasKey("TransactionId");
@@ -162,9 +164,7 @@ namespace SimpleBank.Migrations
                 {
                     b.HasOne("SimpleBank.Models.Account", null)
                         .WithMany("Transactions")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
                 });
 #pragma warning restore 612, 618
         }

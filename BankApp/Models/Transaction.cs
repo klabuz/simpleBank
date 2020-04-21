@@ -11,13 +11,17 @@ namespace SimpleBank.Models
         public int SenderId { get; set; }
         public int ReceiverId { get; set; }
         public int Amount { get; set; }
-        public bool isPending { get; set; }
-        public bool isFinished { get; set; }
+        //public bool isPending { get; set; }
+        //public bool isFinished { get; set; }
+        public int AccountId { get; set; }
+        public int ToAccountId { get; set; }
+        public bool isSelfTransfer { get; set; }
 
         public Transaction()
         {
             CreatedDate = DateTime.Now;
             UpdatedDate = DateTime.Now;
+            isSelfTransfer = false;
         }
     }
 }

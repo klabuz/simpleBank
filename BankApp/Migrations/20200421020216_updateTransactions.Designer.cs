@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleBank.Models;
 
 namespace SimpleBank.Migrations
 {
     [DbContext(typeof(SimpleBankContext))]
-    partial class SimpleBankContextModelSnapshot : ModelSnapshot
+    [Migration("20200421020216_updateTransactions")]
+    partial class updateTransactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,14 +84,8 @@ namespace SimpleBank.Migrations
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ToAccountId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("isSelfTransfer")
-                        .HasColumnType("bit");
 
                     b.HasKey("TransactionId");
 
@@ -160,7 +156,7 @@ namespace SimpleBank.Migrations
 
             modelBuilder.Entity("SimpleBank.Models.Transaction", b =>
                 {
-                    b.HasOne("SimpleBank.Models.Account", null)
+                    b.HasOne("SimpleBank.Models.Account", "Account")
                         .WithMany("Transactions")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
