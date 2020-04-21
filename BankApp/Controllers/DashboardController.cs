@@ -37,25 +37,9 @@ namespace SimpleBank.Controllers
             var accounts = _context.Accounts.Where(i => i.UserId == currentUser.UserId)
                                             .ToList();
 
-            var transactions = _context.Transactions.Where(u => u.SenderId == currentUser.UserId).ToList();
-
-
-            var transactionsHistory = (from t in transactions
-                        join a in accounts on t.ToAccountId equals a.AccountId
-                        join b in accounts on t.AccountId equals b.AccountId
-                        select new SelfTransaction
-                        {
-                            ToAccount = a.Name,
-                            FromAccount = b.Name,
-                            Amount = t.Amount,
-                            isSelfTransfer = t.isSelfTransfer
-                        }).ToList();
-
-
             ViewBag.accounts = accounts;
-            ViewBag.transactions = transactionsHistory;
 
-            return View("Index");
+            return View("Index", currentUser);
         }
 
         [HttpGet]
@@ -63,6 +47,16 @@ namespace SimpleBank.Controllers
         public IActionResult CreateAccount()
         {
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+            return View();
+        }
+
+        [HttpGet]
+        [Route("editaccount")]
+        public IActionResult EditAccount(int accountId)
+        {
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+            var accountEdit = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
+            ViewBag.account = accountEdit;
             return View();
         }
 
@@ -84,7 +78,7 @@ namespace SimpleBank.Controllers
             ViewBag.From = transferFrom;
             ViewBag.Available = accountsAvailable;
 
-            return View();
+            return View(currentUser);
         }
 
         public IActionResult Error()

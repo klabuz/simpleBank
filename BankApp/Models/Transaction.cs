@@ -40,4 +40,21 @@ namespace SimpleBank.Models
         }
     }
 
+
+    public class TransactionsHistory : BaseEntity
+    {
+        public int ToAccountId { get; set; }
+        public string ToAccount { get; set; }
+        public int FromAccountId { get; set; }
+        public string FromAccount { get; set; }
+        public int Amount { get; set; }
+        public int SenderId { get; set; }
+        public string Sender { get; set; }
+        public int ReceiverId { get; set; }
+        public string Receiver { get; set; }
+        public bool isSelfTransfer { get; set; }
+
+        public TransactionsHistory(){}
+    }
+
 }

@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Details";
+}
+@model SimpleBank.Models.User
+
+
+<h2><u>@ViewBag.account.Name</u> - (@ViewBag.account.Type)</h2>
+<p>@Html.ActionLink("Edit", "EditAccount", "Dashboard", new { accountId = ViewBag.account.AccountId})</p>
+<p>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = ViewBag.account.AccountId, userId = @ViewBag.UserId })</p>
+@if (ViewBag.account.isMain == true)
+{
+    <p>This is your Zelle account for receiving payments from others.</p>
+}
+else
+{
+    <p>@Html.ActionLink("Set as Zelle account", "MainAccount", "Account", new { accountId = ViewBag.account.AccountId, transactions = ViewBag.transactions })</p>
+}
+<h3>Current Balance: <strong>$@ViewBag.account.Balance</strong></h3>
+<h4>Transactions history:</h4>
+@foreach (var trans in ViewBag.transactions)
+{
+    if (trans.isSelfTransfer == true)
+    {
+        if (trans.ToAccount == ViewBag.account.Name)
+        {
+            <p style="color: green">You transfered <strong>+$@trans.Amount</strong> from <a href="@Url.Action("Details", "Account", new { accountId = trans.FromAccountId, userId = @ViewBag.UserId })">@trans.FromAccount</a> account (@trans.CreatedDate).</p>
+        }
+        else
+        {
+            <p style="color: red">You transfered <strong>-$@trans.Amount</strong> to <a href="@Url.Action("Details", "Account", new { accountId = trans.ToAccountId, userId = @ViewBag.UserId })">@trans.ToAccount</a> account (@trans.CreatedDate).</p>
+        }
+    }
+}
+

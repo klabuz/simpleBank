@@ -11,7 +11,11 @@
         <form asp-action="CreateAccount" asp-controller="Account" method="post">
             <div class="form-group">
                 <label for="CRE.Type">Account Type:</label>
-                <input type="text" class="form-control" name="CRE.Type">
+                <select name="CRE.Type">
+                    <option value="" selected>Please choose account type</option>
+                    <option value="Saving">Saving</option>
+                    <option value="Checking">Checking</option>
+                </select>
                 <span class="text-danger" asp-validation-for="CRE.Type"></span>
             </div>
             <div class="form-group">
@@ -21,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label for="CRE.Balance">Balance:</label>
-                <input type="text" class="form-control" name="CRE.Balance">
+                <span></span><input type="text" class="form-control" name="CRE.Balance">
                 <span class="text-danger" asp-validation-for="CRE.Balance"></span>
             </div>
 
