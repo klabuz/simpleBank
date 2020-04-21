@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SimpleBank.Models;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
+using System.Transactions;
 
 namespace SimpleBank.Controllers
 {
@@ -19,7 +22,8 @@ namespace SimpleBank.Controllers
         [Route("dashboard")]
         public IActionResult Dashboard(int userId)
         {
-            var currentUser = _context.Users.Where(u => u.UserId == userId).SingleOrDefault();
+            var currentUser = _context.Users.Where(u => u.UserId == userId)
+                                            .SingleOrDefault();
 
             //Reads current user id from session
             ViewBag.CurrentUserId = HttpContext.Session.GetInt32("UserId");
@@ -30,9 +34,26 @@ namespace SimpleBank.Controllers
                 ViewBag.UserName = currentUser.UserName;
             }
 
-            var accounts = _context.Accounts.Where(i => i.UserId == currentUser.UserId).ToList();
+            var accounts = _context.Accounts.Where(i => i.UserId == currentUser.UserId)
+                                            .ToList();
+
+            var transactions = _context.Transactions.Where(u => u.SenderId == currentUser.UserId).ToList();
+
+
+            var transactionsHistory = (from t in transactions
+                        join a in accounts on t.ToAccountId equals a.AccountId
+                        join b in accounts on t.AccountId equals b.AccountId
+                        select new SelfTransaction
+                        {
+                            ToAccount = a.Name,
+                            FromAccount = b.Name,
+                            Amount = t.Amount,
+                            isSelfTransfer = t.isSelfTransfer
+                        }).ToList();
+
 
             ViewBag.accounts = accounts;
+            ViewBag.transactions = transactionsHistory;
 
             return View("Index");
         }

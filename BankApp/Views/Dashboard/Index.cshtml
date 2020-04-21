@@ -18,15 +18,37 @@
         <ul>
             @foreach (var a in ViewBag.accounts)
             {
-                <li>    
+                <li>
                     @a.Name - $@a.Balance
-                    <span>@Html.ActionLink("Tranfser", "Transfer", "Dashboard", new {accountId = @a.AccountId, userId = @ViewBag.UserId })</span>
+                    <span>@Html.ActionLink("Tranfser", "Transfer", "Dashboard", new { accountId = @a.AccountId, userId = @ViewBag.UserId })</span>
                 </li>
             }
         </ul>
     }
-}
-else
-{
+
+    @if (ViewBag.transactions.Count > 0)
+    {
+        <h3>Your Transactions History:</h3>
+        <ul>
+            @foreach (var t in ViewBag.transactions)
+            {
+                if (t.isSelfTransfer == true)
+                {
+                    <li>
+                        <p>You transfered $@t.Amount. from @t.FromAccount account to @t.ToAccount account.</p>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        @*TBD*@
+                    </li>
+                }
+
+            }
+        </ul>}
+    }
+    else
+    {
     <h3>Sorry, you don't have permission to see this page.</h3>
 }

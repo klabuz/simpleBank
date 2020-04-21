@@ -65,9 +65,9 @@ namespace SimpleBank.Controllers
 
         [HttpPost]
         [Route("transfer")]
-        public IActionResult TransferMoney(TransferViewModel transfer)
+        public IActionResult TransferMoney(SelfTransferViewModel transfer)
         {
-            Transfer TRA = transfer.Tra;
+            SelfTransfer TRA = transfer.Tra;
             //Reads current user id from session
             var currentUserId = HttpContext.Session.GetInt32("UserId");
             var amount = TRA.Amount;

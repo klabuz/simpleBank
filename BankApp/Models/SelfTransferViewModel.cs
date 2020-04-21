@@ -2,12 +2,12 @@
 
 namespace SimpleBank.Models
 {
-    public class TransferViewModel : BaseEntity
+    public class SelfTransferViewModel : BaseEntity
     {
-        public Transfer Tra { get; set; }
+        public SelfTransfer Tra { get; set; }
     }
 
-    public class Transfer : BaseEntity
+    public class SelfTransfer : BaseEntity
     {
         [Required]
         [Display(Name = "to account")]

@@ -5,8 +5,6 @@ namespace SimpleBank.Models
     public class AccountViewModel : BaseEntity
     {
         public Create Cre { get; set; }
-
-        public Transfer Tra { get; set; }
     }
 
     public class Create : BaseEntity

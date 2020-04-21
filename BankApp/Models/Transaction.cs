@@ -24,4 +24,20 @@ namespace SimpleBank.Models
             isSelfTransfer = false;
         }
     }
+
+    public class SelfTransaction : BaseEntity
+    {
+
+        public string ToAccount { get; set; }
+        public string FromAccount { get; set; }
+        public int Amount { get; set; }
+        public bool isSelfTransfer { get; set; }
+
+        public SelfTransaction()
+        {
+            CreatedDate = DateTime.Now;
+            UpdatedDate = DateTime.Now;
+        }
+    }
+
 }
