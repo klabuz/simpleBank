@@ -1,6 +1,7 @@
-﻿
+﻿.dashboard-layout {
+    margin-left: 50px;
 
-
-@media only screen and (max-width: $screen-xs) {
-
+    ul {
+        list-style: none;
+    }
 }

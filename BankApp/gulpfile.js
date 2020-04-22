@@ -1,3 +1,4 @@
+/// <binding Clean='watch' />
 // Initialize modules
 // Importing specific gulp API functions lets us write them below as series() instead of gulp.series()
 const { src, dest, series, parallel } = require('gulp');

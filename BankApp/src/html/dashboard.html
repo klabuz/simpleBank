@@ -12,36 +12,57 @@
     <script src="/dist/js/script.js" asp-append-version="true"></script>
 </head>
 <body>
-    <header class="header-nav">
-        <ul class="header-nav-list">
-            <li class="header-nav-list-item nav-header-home-link"><a href="#">SimpleBank</a></li>
-            <li class="header-nav-list-item"><a href="#">Dashboard</a></li>
-            <li class="header-nav-list-item"><a href="#">Logout</a></li>
-        </ul>
-    </header>
-    <div class="dashboard-layout">
-        <h3 class="dashboard-user-greetings">Hello, Konrad!</h3>
-        <ul class="dashboard-action-list">
-            <li class="dashboard-action-list-item"><a href="#">Open an account</a></li>
-        </ul>
+    <header>
+        <div class="container-fluid">
+            <div class="navigation">
+                <button id="sized" class="menu">
+                    <span></span>
+                </button>
+                <div id="myModal" class="modal">
+                    <div class="modal-content animated zoomIn">
+                        <div class="modal-header">
+                            <span class="close">×</span>
+                        </div>
 
-        <h4 class="dashboard-account-title">Your Accounts:</h4>
-        <ul class="dashboard-account-list">
-            <li class="dashboard-account-item">
-                <a href="#">First Account</a> - $850
-                <a href="#">Transfer</a>
-                <a href="#">Pay</a>
-                <span>Zelle</span>
-            </li>
-            <li class="dashboard-account-item">
-                <a href="#">Second Account</a> - $200
-                <a href="#">Transfer</a>
-                <a href="#">Pay</a>
-            </li>
-        </ul>
-        <footer class="footer-nav">
-            <p>&copy; 2020 - Simple Bank</p>
-        </footer>
+                        <div class="modal-body nav">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Dashboard</a></li>
+                                <li><a href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="dashboard-layout">
+            <h3 class="dashboard-user-greetings">Hello, <span class="user-name">Konrad</span>!</h3>
+            <ul class="dashboard-action-list">
+                <li class="dashboard-action-list-item"><a href="#">Open an account</a></li>
+            </ul>
+
+            <h4 class="dashboard-account-title">Your Accounts:</h4>
+            <ul class="dashboard-account-list">
+                <li class="dashboard-account-item">
+                    <a href="#">First Account</a> - $850
+                    <a href="#">Transfer</a>
+                    <a href="#">Pay</a>
+                    <span>Zelle</span>
+                </li>
+                <li class="dashboard-account-item">
+                    <a href="#">Second Account</a> - $200
+                    <a href="#">Transfer</a>
+                    <a href="#">Pay</a>
+                </li>
+            </ul>
+        </div>
     </div>
+    <footer>
+    </footer>  
 </body>
 </html>
+
+
+

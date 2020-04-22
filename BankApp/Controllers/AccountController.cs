@@ -64,7 +64,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpPost]
-        [Route("transfer")]
+        [Route("transfer/{accountId}")]
         public IActionResult TransferMoney(TransferViewModel transfer)
         {
             SelfTransfer TRA = transfer.Tra;
@@ -95,7 +95,7 @@ namespace SimpleBank.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Details", "Account", new { accountId = fromAccount.AccountId, userId = currentUserId });
+            return RedirectToAction("Details", "Account", new { accountId = fromAccount.AccountId });
         }
 
         [HttpGet]

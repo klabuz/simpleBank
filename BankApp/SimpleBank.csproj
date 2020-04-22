@@ -15,6 +15,7 @@
     <None Remove="dist\css\main.css" />
     <None Remove="dist\css\main.css.map" />
     <None Remove="dist\js\script.js" />
+    <None Remove="src\scss\10-basic\_template-list.scss" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +69,7 @@
     <Content Include="src\scss\00-config\_fonts.scss" />
     <Content Include="src\scss\00-config\_mixins.scss" />
     <Content Include="src\scss\00-config\_variables.scss" />
+    <Content Include="src\scss\10-basic\_template-list.scss" />
     <Content Include="src\scss\10-basic\_nav.scss" />
     <Content Include="src\scss\main.scss" />
   </ItemGroup>

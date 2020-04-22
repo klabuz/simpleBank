@@ -3,38 +3,32 @@
 }
 @model SimpleBank.Models.User
 
-
-@if (Model.UserId == ViewBag.CurrentUserId && ViewBag.CurrentUserId != null)
-{
-    <h3>Hello, @Model.UserName!</h3>
-
-    <ul>
-        <li>@Html.ActionLink("Open an account", "CreateAccount", "Dashboard")</li>
+<div class="dashboard-layout">
+    <h3 class="dashboard-user-greetings">Hello, <span class="user-name">@Model.UserName</span>!</h3>
+    <ul class="dashboard-action-list">
+        <li class="dashboard-account-item">@Html.ActionLink("Open an account", "CreateAccount", "Dashboard")</li>
     </ul>
 
     @if (ViewBag.accounts.Count > 0)
     {
-        <h4>Your Accounts:</h4>
-        <ul>
+        <h4 class="dashboard-account-title">Your Accounts:</h4>
+        <ul class="dashboard-account-list">
             @foreach (var a in ViewBag.accounts)
             {
-            <li>
-                <a href="@Url.Action("Details", "Account", new { accountId = @a.AccountId })">@a.Name</a> - $@a.Balance
-                @if (ViewBag.accounts.Count > 1)
-                {
-                    <span>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = @a.AccountId })</span>
-                }
-                <span>@Html.ActionLink("Pay", "Pay", "Dashboard", new { accountId = @a.AccountId })</span>
-                @if (a.isMain == true)
-                {
-                    <span style="color: gray">Zelle</span>
-                }
-            </li>
+                <li class="dashboard-account-item">
+                    <a href="@Url.Action("Details", "Account", new { accountId = @a.AccountId })">@a.Name</a> - $@a.Balance
+                    @if (ViewBag.accounts.Count > 1)
+                    {
+                        <span>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = @a.AccountId })</span>
+                    }
+                    <span>@Html.ActionLink("Pay", "Pay", "Dashboard", new { accountId = @a.AccountId })</span>
+                    @if (a.isMain == true)
+                    {
+                        <span>Zelle</span>
+                    }
+                </li>
             }
         </ul>
-    }   
-}
-else
-{
-    <h3>Sorry, you don't have permission to see this page.</h3>
-}
+    }
+</div>
+
