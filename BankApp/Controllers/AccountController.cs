@@ -143,19 +143,18 @@ namespace SimpleBank.Controllers
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
             var currentUserId = HttpContext.Session.GetInt32("UserId");
             var account = _context.Accounts.Where(u => u.UserId == currentUserId).ToList();
-
-            foreach(var a in account)
-            {
-                if (a.isMain == true)
-                {
-                    a.isMain = false;
-                }
-            }
-
+            var checkZelleAccount = _context.Accounts.Where(u => u.UserId == currentUserId)
+                                                .Where(m => m.isMain == true)
+                                                .SingleOrDefault();
             var mainAccount = _context.Accounts.Where(u => u.AccountId == accountId).SingleOrDefault();
+
+            if (checkZelleAccount != null)
+            {
+                checkZelleAccount.isMain = false;
+            }
+         
             mainAccount.isMain = true;
             _context.SaveChanges();
-
 
             return RedirectToAction("Details", new { accountId, userId = currentUserId });
         }
