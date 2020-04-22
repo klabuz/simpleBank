@@ -65,7 +65,7 @@ namespace SimpleBank.Controllers
 
         [HttpPost]
         [Route("transfer")]
-        public IActionResult TransferMoney(SelfTransferViewModel transfer)
+        public IActionResult TransferMoney(TransferViewModel transfer)
         {
             SelfTransfer TRA = transfer.Tra;
             //Reads current user id from session
@@ -105,7 +105,7 @@ namespace SimpleBank.Controllers
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
             var currentUser = _context.Users.Where(u => u.UserId == userId).SingleOrDefault();
             var accountInfo = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
-            var accounts = _context.Accounts.Where(u => u.UserId == userId).ToList();
+            var accounts = _context.Accounts.ToList();
             var transactions = _context.Transactions.Where(i => i.AccountId == accountId || i.ToAccountId == accountId).ToList();
             var users = _context.Users.ToList();
 
@@ -124,9 +124,9 @@ namespace SimpleBank.Controllers
                                            Amount = t.Amount,
                                            isSelfTransfer = t.isSelfTransfer,
                                            SenderId = t.SenderId,
-                                           Sender = u.UserName,
+                                           Sender = y.UserName,
                                            ReceiverId = t.ReceiverId,
-                                           Receiver = y.UserName,
+                                           Receiver = u.UserName,
                                            CreatedDate = t.CreatedDate
                                        }).ToList().OrderByDescending(d => d.CreatedDate);
 
@@ -188,6 +188,77 @@ namespace SimpleBank.Controllers
                 return RedirectToAction("Details", new { accountId, userId = currentUserId });
             }
             return RedirectToAction("EditAccount", "Dashboard", new { accountId });
+        }
+
+        [HttpPost]
+        [Route("pay")]
+        public IActionResult Pay(TransferViewModel transfer, int accountId)
+        {
+            PayTransfer PAY = transfer.Pay;
+            //Reads current user id from session
+            var currentUserId = HttpContext.Session.GetInt32("UserId");
+            if (ModelState.IsValid)
+            {
+                bool hasZelle = false; 
+                var allUserAccounts = _context.Accounts.Where(u => u.UserId == currentUserId).ToList();
+                foreach(var z in allUserAccounts)
+                {
+                    if(z.isMain == true)
+                    {
+                        hasZelle = true;  
+                    }
+                }
+
+                var fromAccount = _context.Accounts.Where(u => u.AccountId == accountId).SingleOrDefault();
+                if(!hasZelle){
+                    ModelState.AddModelError("PAY.ReceiverUsername", "You need to activate Zelle account.");
+
+                    return RedirectToAction("Pay", "Dashboard", new { accountId });
+                }
+
+                var amount = PAY.Amount;
+             
+                var receiver = _context.Users.Where(u => u.UserName == PAY.ReceiverUsername).SingleOrDefault();
+                if (receiver == null)
+                {
+                    ModelState.AddModelError("PAY.ReceiverUsername", "This username doesn't exist.");
+
+                    return RedirectToAction("Pay", "Dashboard", new { accountId });
+                }
+
+                var receiverZelleAccount = _context.Accounts.Where(m => m.isMain == true)
+                                                            .Where(i => i.UserId == receiver.UserId)
+                                                            .SingleOrDefault();
+                if (receiverZelleAccount == null)
+                {
+                    ModelState.AddModelError("PAY.ReceiverUsername", "This username exist but doesn't have activated Zelle account.");
+
+                    return RedirectToAction("Pay", "Dashboard", new { accountId });
+                }
+
+                fromAccount.Balance -= amount;
+                receiverZelleAccount.Balance += amount;
+
+                if (fromAccount.Balance >= 0)
+                {
+                    _context.SaveChanges();
+
+                    Transaction newTransaction = new Transaction()
+                    {
+                        SenderId = (int)currentUserId,
+                        ReceiverId = (int)receiver.UserId,
+                        Amount = amount,
+                        AccountId = fromAccount.AccountId,
+                        ToAccountId = receiverZelleAccount.AccountId,
+                    };
+
+                    _context.Transactions.Add(newTransaction);
+                    _context.SaveChanges();
+                }
+
+                return RedirectToAction("Details", "Account", new { accountId = fromAccount.AccountId, userId = currentUserId});
+            }
+            return RedirectToAction("Pay", "Dashboard", new { accountId });
         }
 
         public IActionResult Error()

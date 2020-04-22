@@ -81,6 +81,16 @@ namespace SimpleBank.Controllers
             return View(currentUser);
         }
 
+        [HttpGet]
+        [Route("pay")]
+        public IActionResult Pay(int accountId)
+        {
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+            var fromAccount = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
+            ViewBag.account = fromAccount;
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

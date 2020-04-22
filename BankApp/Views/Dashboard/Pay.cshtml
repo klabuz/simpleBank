@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Pay Money";
+}
+@model SimpleBank.Models.User
+
+@Html.ActionLink("Back to account", "Details", "Account", new { accountId = ViewBag.account.AccountId, userId = @ViewBag.UserId })
+
+<div class="row">
+    <div class="col-sm-6">
+        <form asp-action="Pay" asp-controller="Account" method="post">
+            <h2>Pay money to Zelle friend!</h2>
+
+            <div class="form-group">
+                <label for="PAY.ReceiverUsername">Friend (username)</label>
+                <input type="text" class="form-control" name="PAY.ReceiverUsername">
+                <span class="text-danger" asp-validation-for="PAY.ReceiverUsername"></span>
+            </div>
+            <div class="form-group">
+                <label for="PAY.Amount">Amount: (available $@ViewBag.account.Balance)</label>
+                <input type="text" class="form-control" name="PAY.Amount">
+                <span class="text-danger" asp-validation-for="PAY.Amount"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Pay</button>
+        </form>
+    </div>
+</div>

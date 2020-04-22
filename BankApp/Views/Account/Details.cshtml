@@ -5,8 +5,9 @@
 
 
 <h2><u>@ViewBag.account.Name</u> - (@ViewBag.account.Type)</h2>
-<p>@Html.ActionLink("Edit", "EditAccount", "Dashboard", new { accountId = ViewBag.account.AccountId})</p>
+<p>@Html.ActionLink("Edit", "EditAccount", "Dashboard", new { accountId = ViewBag.account.AccountId })</p>
 <p>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = ViewBag.account.AccountId, userId = @ViewBag.UserId })</p>
+<p>@Html.ActionLink("Pay", "Pay", "Dashboard", new { accountId = ViewBag.account.AccountId, userId = @ViewBag.UserId })</p>
 @if (ViewBag.account.isMain == true)
 {
     <p>This is your Zelle account for receiving payments from others.</p>
@@ -28,6 +29,17 @@ else
         else
         {
             <p style="color: red">You transfered <strong>-$@trans.Amount</strong> to <a href="@Url.Action("Details", "Account", new { accountId = trans.ToAccountId, userId = @ViewBag.UserId })">@trans.ToAccount</a> account (@trans.CreatedDate).</p>
+        }
+    }
+    else
+    {
+        if (trans.FromAccountId == ViewBag.account.AccountId)
+        {
+            <p style="color: red">You paid <strong>-$@trans.Amount</strong> to @trans.Receiver (@trans.CreatedDate).</p>
+        }
+        else
+        {
+            <p style="color: green">@trans.Sender paid you <strong>+$@trans.Amount</strong> (@trans.CreatedDate).</p>
         }
     }
 }
