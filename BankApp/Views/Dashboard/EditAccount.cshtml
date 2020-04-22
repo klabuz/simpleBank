@@ -4,7 +4,7 @@
 
 @model SimpleBank.Models.AccountViewModel
 
-@Html.ActionLink("Back to account", "Details", "Account", new { accountId = ViewBag.account.AccountId, userId = @ViewBag.UserId })
+@Html.ActionLink("Back to account", "Details", "Account", new { accountId = ViewBag.account.AccountId })
 <div class="row">
     <div class="col-sm-6">
         <h2>Edit @ViewBag.account.Name</h2>

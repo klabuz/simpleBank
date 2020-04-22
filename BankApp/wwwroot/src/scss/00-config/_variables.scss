@@ -1,0 +1,26 @@
+///////////////////////////////
+/// Color Names
+///////////////////////////////
+$colorname-white: #ffffff;
+
+///////////////////////////////
+/// Breakpoints & Containers
+///////////////////////////////
+$screen-xs: 480px; // [bootstrap]
+$screen-sm: 768px; // [bootstrap]
+$screen-md: 1000px; // [bootstrap]
+$screen-lg: 1200px; // [bootstrap]
+
+$utility-nav-breakpoint: 1080px;
+$utility-nav-breakpoint-max: $utility-nav-breakpoint - 1;
+
+$container-sm: $screen-sm;
+$container-md: $screen-md;
+$container-lg: $screen-lg;
+
+$container-padding-mobile: 15px;
+$container-padding-desktop: 30px;
+$container-padding-breakpoint: $screen-sm;
+
+$container-max-width: 1230px;
+$container-breakout-max-width: 1440px;

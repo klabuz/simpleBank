@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\scss\**" />
+    <Content Remove="wwwroot\scss\**" />
+    <EmbeddedResource Remove="wwwroot\scss\**" />
+    <None Remove="wwwroot\scss\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
@@ -18,6 +25,9 @@
 
   <ItemGroup>
     <Folder Include="Views\User\" />
+    <Folder Include="wwwroot\dist\css\" />
+    <Folder Include="wwwroot\dist\js\" />
+    <Folder Include="wwwroot\src\js\" />
   </ItemGroup>
 
 </Project>

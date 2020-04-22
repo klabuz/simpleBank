@@ -19,7 +19,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpGet]
-        [Route("dashboard")]
+        [Route("dashboard/{userId}")]
         public IActionResult Dashboard(int userId)
         {
             var currentUser = _context.Users.Where(u => u.UserId == userId)
@@ -51,7 +51,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpGet]
-        [Route("editaccount")]
+        [Route("editaccount/{accountId}")]
         public IActionResult EditAccount(int accountId)
         {
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
@@ -61,15 +61,16 @@ namespace SimpleBank.Controllers
         }
 
         [HttpGet]
-        [Route("transfer")]
-        public IActionResult Transfer(int accountId, int userId)
+        [Route("transfer/{accountId}")]
+        public IActionResult Transfer(int accountId)
         {
-            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+            var currentUserId = HttpContext.Session.GetInt32("UserId");
+            ViewBag.UserId = currentUserId;
 
-            var currentUser = _context.Users.Where(u => u.UserId == userId).SingleOrDefault();
+            var currentUser = _context.Users.Where(u => u.UserId == currentUserId).SingleOrDefault();
 
             var accountsAvailable = _context.Accounts.Where(i => i.AccountId != accountId)
-                                                     .Where(u => u.UserId == userId)
+                                                     .Where(u => u.UserId == currentUserId)
                                                      .ToList();
 
             var transferFrom = _context.Accounts.Where(i => i.AccountId == accountId)
@@ -82,7 +83,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpGet]
-        [Route("pay")]
+        [Route("pay/{accountId}")]
         public IActionResult Pay(int accountId)
         {
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");

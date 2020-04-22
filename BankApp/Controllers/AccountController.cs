@@ -99,11 +99,12 @@ namespace SimpleBank.Controllers
         }
 
         [HttpGet]
-        [Route("details")]
-        public IActionResult Details(int accountId, int userId)
+        [Route("details/{accountId}")]
+        public IActionResult Details(int accountId)
         {
-            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
-            var currentUser = _context.Users.Where(u => u.UserId == userId).SingleOrDefault();
+            var currentUserId = HttpContext.Session.GetInt32("UserId");
+            ViewBag.UserId = currentUserId;
+            var currentUser = _context.Users.Where(u => u.UserId == currentUserId).SingleOrDefault();
             var accountInfo = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
             var accounts = _context.Accounts.ToList();
             var transactions = _context.Transactions.Where(i => i.AccountId == accountId || i.ToAccountId == accountId).ToList();
@@ -137,7 +138,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpGet]
-        [Route("mainaccount")]
+        [Route("mainaccount/{accountId}")]
         public IActionResult MainAccount(int accountId)
         {
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
@@ -161,7 +162,7 @@ namespace SimpleBank.Controllers
 
 
         [HttpPost]
-        [Route("editaccount")]
+        [Route("editaccount/{accountId}")]
         public IActionResult EditAccount(AccountViewModel account, int accountId)
         {
             Edit EDI = account.Edi;
@@ -190,7 +191,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpPost]
-        [Route("pay")]
+        [Route("pay/{accountId}")]
         public IActionResult Pay(TransferViewModel transfer, int accountId)
         {
             PayTransfer PAY = transfer.Pay;

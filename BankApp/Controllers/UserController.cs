@@ -88,6 +88,7 @@ namespace SimpleBank.Controllers
                     ModelState.AddModelError("Log.UserName", "This username doesn't exist.");
                 }
             }
+
             return RedirectToAction("Login", "Home");
         }
 

@@ -33,6 +33,11 @@ namespace SimpleBank.Controllers
         [Route("login")]
         public IActionResult Login()
         {
+            if (TempData["ModelState"] != null)
+            {
+                var errorMessage = TempData["ModelState"];
+            }
+
             return View("Login");
         }
 
