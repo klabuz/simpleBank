@@ -5,14 +5,64 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\scss\**" />
-    <Content Remove="wwwroot\scss\**" />
-    <EmbeddedResource Remove="wwwroot\scss\**" />
-    <None Remove="wwwroot\scss\**" />
+    <None Remove="dist\css\main.css" />
+    <None Remove="dist\css\main.css.map" />
+    <None Remove="dist\js\script.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="dist\css\main.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="dist\css\main.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="dist\js\script.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="favicon.ico" />
     <Content Include="gulpfile.js" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <Content Include="lib\bootstrap\LICENSE" />
+    <Content Include="lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <Content Include="lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="lib\jquery-validation\LICENSE.md" />
+    <Content Include="lib\jquery\dist\jquery.js" />
+    <Content Include="lib\jquery\dist\jquery.min.js" />
+    <Content Include="lib\jquery\dist\jquery.min.map" />
+    <Content Include="lib\jquery\LICENSE.txt" />
+    <Content Include="src\scss\00-config\_fonts.scss" />
+    <Content Include="src\scss\00-config\_mixins.scss" />
+    <Content Include="src\scss\00-config\_variables.scss" />
+    <Content Include="src\scss\10-basic\_nav.scss" />
+    <Content Include="src\scss\main.scss" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,9 +79,6 @@
 
   <ItemGroup>
     <Folder Include="Views\User\" />
-    <Folder Include="wwwroot\dist\css\" />
-    <Folder Include="wwwroot\dist\js\" />
-    <Folder Include="wwwroot\src\js\" />
   </ItemGroup>
 
 </Project>
