@@ -1,0 +1,1 @@
+{"version":3,"sources":["00-config/_fonts.scss"],"names":[],"mappings":"AACA,sEAAY,CACZ,yFAAY","file":"main.css","sourcesContent":["// webfonts @import statements\r\n@import url('https://use.fontawesome.com/releases/v5.0.6/css/all.css');\r\n@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700,800');"]}

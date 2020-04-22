@@ -15,8 +15,8 @@ const browserSync = require('browser-sync').create();
 
 // File paths
 const files = {
-    scssPath: './wwwwroot/src/scss/**/*.scss',
-    jsPath: './wwwroot/src/js/**/*.js'
+    scssPath: './src/scss/**/*.scss',
+    jsPath: './src/js/**/*.js'
 }
 
 // Sass task: compiles the style.scss file into style.css
@@ -26,7 +26,7 @@ function scssTask(){
         .pipe(sass()) // compile SCSS to CSS
         .pipe(postcss([ autoprefixer(), cssnano() ])) // PostCSS plugins
         .pipe(sourcemaps.write('.')) // write sourcemaps file in current directory
-        .pipe(dest('./wwwroot/dist/css')
+        .pipe(dest('./dist/css')
     ); // put final CSS in assets css folder
 }
 
@@ -38,7 +38,7 @@ function jsTask(){
         ])
         .pipe(concat('script.js'))
         .pipe(uglify())
-        .pipe(dest('./wwwroot/dist/js')
+        .pipe(dest('./dist/js')
     );
 }
 
@@ -50,7 +50,7 @@ function jsTask(){
 //        }
 //    });
 //    gulp.watch(files.scssPath, scssTask);
-//    gulp.watch('./wwwroot/html/*.html').on('change', browserSync.reload);
+//    gulp.watch('./html/*.html').on('change', browserSync.reload);
 //    gulp.watch(files.jsPath).on('change', browserSync.reload);
 //}
 
