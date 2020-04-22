@@ -1,0 +1,22 @@
+﻿.template-list-title {
+
+}
+
+.template-list {
+    list-style: none;
+
+    .template-list-item {
+        padding: 0.5rem 0;
+
+        a {
+            text-decoration: none;
+            color: black;
+
+            &:hover {
+                color: #FFC506;
+            }
+        }
+    }
+}
+
+

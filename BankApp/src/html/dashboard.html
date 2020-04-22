@@ -12,39 +12,34 @@
     <script src="/dist/js/script.js" asp-append-version="true"></script>
 </head>
 <body>
-
-    <div>
-        Simple Bank
-    </div>
-    <div>
-        <ul>
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Logout</a></li>
+    <header class="header-nav">
+        <ul class="header-nav-list">
+            <li class="header-nav-list-item nav-header-home-link"><a href="#">SimpleBank</a></li>
+            <li class="header-nav-list-item"><a href="#">Dashboard</a></li>
+            <li class="header-nav-list-item"><a href="#">Logout</a></li>
         </ul>
-    </div>
-    <div>
-        <h3>Hello, Konrad!</h3>
-
-        <ul>
-            <li><a href="#">Open an account</a></li>
+    </header>
+    <div class="dashboard-layout">
+        <h3 class="dashboard-user-greetings">Hello, Konrad!</h3>
+        <ul class="dashboard-action-list">
+            <li class="dashboard-action-list-item"><a href="#">Open an account</a></li>
         </ul>
 
-        <h4>Your Accounts:</h4>
-        <ul>
-            <li>
+        <h4 class="dashboard-account-title">Your Accounts:</h4>
+        <ul class="dashboard-account-list">
+            <li class="dashboard-account-item">
                 <a href="#">First Account</a> - $850
                 <a href="#">Transfer</a>
                 <a href="#">Pay</a>
                 <span>Zelle</span>
             </li>
-            <li>
+            <li class="dashboard-account-item">
                 <a href="#">Second Account</a> - $200
                 <a href="#">Transfer</a>
                 <a href="#">Pay</a>
             </li>
         </ul>
-        <hr />
-        <footer>
+        <footer class="footer-nav">
             <p>&copy; 2020 - Simple Bank</p>
         </footer>
     </div>
