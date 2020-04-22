@@ -54,10 +54,19 @@ function jsTask(){
 //    gulp.watch(files.jsPath).on('change', browserSync.reload);
 //}
 
+gulp.task('watch', function () {
+    browserSync.init({
+        server: {
+            baseDir: './'
+        }
+    });
+    gulp.watch(files.scssPath, scssTask);
+    gulp.watch('./src/html/*.html').on('change', browserSync.reload);
+    gulp.watch(files.jsPath).on('change', browserSync.reload);
+})
 // Export the default Gulp task so it can be run
 // Runs the scss and js tasks simultaneously
 // then runs cacheBust, then watch task
 exports.default = series(
     parallel(scssTask, jsTask),
-    //watchTask
 );

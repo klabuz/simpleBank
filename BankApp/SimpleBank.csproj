@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\User\**" />
+    <Content Remove="Views\User\**" />
+    <EmbeddedResource Remove="Views\User\**" />
+    <None Remove="Views\User\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="dist\css\main.css" />
     <None Remove="dist\css\main.css.map" />
     <None Remove="dist\js\script.js" />
@@ -23,7 +30,7 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="favicon.ico" />
+    <Content Include="dist\favicon.ico" />
     <Content Include="gulpfile.js" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css.map" />
@@ -78,7 +85,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\User\" />
+    <Folder Include="dist\images\" />
   </ItemGroup>
 
 </Project>
