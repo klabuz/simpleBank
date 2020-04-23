@@ -43,17 +43,6 @@ function jsTask(){
     );
 }
 
-// Watch for changes to any scss or js file
-//function watchTask() {
-//    browserSync.init({
-//        server: {
-//            baseDir: './'
-//        }
-//    });
-//    gulp.watch(files.scssPath, scssTask);
-//    gulp.watch('./html/*.html').on('change', browserSync.reload);
-//    gulp.watch(files.jsPath).on('change', browserSync.reload);
-//}
 
 gulp.task('watch', function () {
     browserSync.init({
