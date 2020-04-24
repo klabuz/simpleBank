@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using SimpleBank.Models;
 using System;
 using System.Diagnostics;
@@ -134,7 +137,7 @@ namespace SimpleBank.Controllers
             ViewBag.transactions = transactionsHistory;
             ViewBag.account = accountInfo;
 
-            return View(currentUser);
+            return View();
         }
 
         [HttpGet]
@@ -259,6 +262,51 @@ namespace SimpleBank.Controllers
                 return RedirectToAction("Details", "Account", new { accountId = fromAccount.AccountId, userId = currentUserId});
             }
             return RedirectToAction("Pay", "Dashboard", new { accountId });
+        }
+
+        [HttpPost]
+        [Route("details/{accountId}")]
+        public IActionResult StatementPDF(AccountViewModel statement)
+        {
+            Statement STAT = statement.Stat;
+
+            DateTime startDate = STAT.startDate;
+            DateTime endDate = STAT.endDate;
+
+            var accountId = STAT.AccountId;
+
+            var accountInfo = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
+
+            var statementTransactions = _context.Transactions.Where(u => u.AccountId == accountId || u.ToAccountId == accountId)
+                                                 .Where(d => d.CreatedDate >= startDate)
+                                                 .Where(de => de.CreatedDate <= endDate)
+                                                 .ToList();
+
+            // Create a new PDF document
+            PdfDocument document = new PdfDocument();
+            document.Info.Title = "Statement generated from simpleBank.";
+
+            // Create an empty page
+            PdfPage page = document.AddPage();
+
+            // Get an XGraphics object for drawing
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            // Create a font
+            XFont font12 = new XFont("Verdana", 12, XFontStyle.BoldItalic);
+            XFont font10 = new XFont("Verdana", 10, XFontStyle.BoldItalic);
+
+            // Draw the text
+            gfx.DrawString($"This is a statement from {startDate.ToShortDateString()} to {endDate.ToShortDateString()}"
+            ,font12, XBrushes.Black,
+            new XRect(0, 0, page.Width, page.Height),
+            XStringFormats.Center);
+
+            // Save the document...
+            string filename = accountInfo.Name.Trim() + "_Statement_" + startDate.ToShortDateString().Trim().Replace('/','_') + ".pdf";
+            document.Save(filename);
+
+            return RedirectToAction("Details", "Account", new { accountId });
         }
 
         public IActionResult Error()

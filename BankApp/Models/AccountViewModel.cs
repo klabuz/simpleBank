@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimpleBank.Models
 {
@@ -7,6 +8,8 @@ namespace SimpleBank.Models
         public Create Cre { get; set; }
 
         public Edit Edi { get; set; }
+
+        public Statement Stat { get; set; }
     }
 
     public class Create : BaseEntity
@@ -44,5 +47,19 @@ namespace SimpleBank.Models
         [Compare("PIN", ErrorMessage = "PIN numbers don't match.")]
 
         public string PINConfirm { get; set; }
+    }
+
+    public class Statement : BaseEntity
+    {
+        public int AccountId { get; set; }
+
+        [Required]
+        [Display(Name = "from")]
+        public DateTime startDate { get; set; }
+
+        [Required]
+        [Display(Name = "to")]
+        public DateTime endDate { get; set; }
+
     }
 }

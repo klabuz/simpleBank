@@ -1,13 +1,10 @@
 ﻿@{
     ViewBag.Title = "Details";
 }
-@model SimpleBank.Models.User
+@model SimpleBank.Models.AccountViewModel
 
 
 <h2><u>@ViewBag.account.Name</u> - (@ViewBag.account.Type)</h2>
-<p>@Html.ActionLink("Edit", "EditAccount", "Dashboard", new { accountId = ViewBag.account.AccountId })</p>
-<p>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = ViewBag.account.AccountId })</p>
-<p>@Html.ActionLink("Pay", "Pay", "Dashboard", new { accountId = ViewBag.account.AccountId })</p>
 @if (ViewBag.account.isMain == true)
 {
     <p>This is your Zelle account for receiving payments from others.</p>
@@ -16,6 +13,22 @@ else
 {
     <p>@Html.ActionLink("Set as Zelle account", "MainAccount", "Account", new { accountId = ViewBag.account.AccountId, transactions = ViewBag.transactions })</p>
 }
+<p>@Html.ActionLink("Edit", "EditAccount", "Dashboard", new { accountId = ViewBag.account.AccountId })</p>
+<p>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = ViewBag.account.AccountId })</p>
+<p>@Html.ActionLink("Pay", "Pay", "Dashboard", new { accountId = ViewBag.account.AccountId })</p>
+<hr />
+<h3>Generate PDF Statement</h3>
+<form asp-action="StatementPDF" asp-controller="Account" method="post">   
+    <input name="STAT.AccountId" value="@ViewBag.account.AccountId" hidden />
+    <label for="STAT.startDate">From:</label><br>
+    <input type="date" name="STAT.startDate"><br>
+    <label for="STAT.endDate">To:</label><br>
+    <input type="date" name="STAT.endDate" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+    <br /><br />
+
+    <button type="submit" class="btn btn-primary">Generate Statement</button>
+</form>
+<hr />
 <h3>Current Balance: <strong>$@ViewBag.account.Balance</strong></h3>
 <h4>Transactions history:</h4>
 @foreach (var trans in ViewBag.transactions)
