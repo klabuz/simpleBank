@@ -274,6 +274,8 @@ namespace SimpleBank.Controllers
             DateTime endDate = STAT.endDate;
 
             var accountId = STAT.AccountId;
+            var accounts = _context.Accounts.ToList();
+            var users = _context.Users.ToList();
 
             var accountInfo = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
 
@@ -281,6 +283,27 @@ namespace SimpleBank.Controllers
                                                  .Where(d => d.CreatedDate >= startDate)
                                                  .Where(de => de.CreatedDate <= endDate)
                                                  .ToList();
+
+            var transactionsHistory = (from t in statementTransactions
+                                       join a in accounts on t.ToAccountId equals a.AccountId
+                                       join b in accounts on t.AccountId equals b.AccountId
+                                       join u in users on a.UserId equals u.UserId
+                                       join y in users on b.UserId equals y.UserId
+
+                                       select new TransactionsHistory
+                                       {
+                                           ToAccountId = a.AccountId,
+                                           ToAccount = a.Name,
+                                           FromAccountId = b.AccountId,
+                                           FromAccount = b.Name,
+                                           Amount = t.Amount,
+                                           isSelfTransfer = t.isSelfTransfer,
+                                           SenderId = t.SenderId,
+                                           Sender = y.UserName,
+                                           ReceiverId = t.ReceiverId,
+                                           Receiver = u.UserName,
+                                           CreatedDate = t.CreatedDate
+                                       }).ToList().OrderByDescending(d => d.CreatedDate);
 
             // Create a new PDF document
             PdfDocument document = new PdfDocument();
@@ -293,17 +316,20 @@ namespace SimpleBank.Controllers
             XGraphics gfx = XGraphics.FromPdfPage(page);
 
             // Create a font
-            XFont font12 = new XFont("Verdana", 12, XFontStyle.BoldItalic);
+            XFont font14 = new XFont("Verdana", 14, XFontStyle.BoldItalic);
             XFont font10 = new XFont("Verdana", 10, XFontStyle.BoldItalic);
 
             // Draw the text
-            gfx.DrawString($"This is a statement from {startDate.ToShortDateString()} to {endDate.ToShortDateString()}"
-            ,font12, XBrushes.Black,
-            new XRect(0, 0, page.Width, page.Height),
-            XStringFormats.Center);
-
+            gfx.DrawString($"This is a {accountInfo.Name} account statement " +
+                $"from {startDate.ToShortDateString()} " +
+                $"to {endDate.ToShortDateString()}"
+            ,font14, XBrushes.Black,
+            new XRect(10, 10, page.Width, page.Height),
+            XStringFormats.TopLeft);
+            
             // Save the document...
             string filename = accountInfo.Name.Trim() + "_Statement_" + startDate.ToShortDateString().Trim().Replace('/','_') + ".pdf";
+            
             document.Save(filename);
 
             return RedirectToAction("Details", "Account", new { accountId });
