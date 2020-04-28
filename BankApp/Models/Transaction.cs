@@ -39,4 +39,19 @@ namespace SimpleBank.Models
         public TransactionsHistory(){}
     }
 
+    public class StockTransaction : BaseEntity
+    {
+        [Key]
+        public int StockTransactionId { get; set; }
+        public int BuyerId { get; set; }
+        public double Price { get; set; }
+        public int Shares { get; set; }
+        public int BuyerAccount { get; set; }
+
+        public StockTransaction()
+        {
+            CreatedDate = DateTime.Now;
+            UpdatedDate = DateTime.Now;
+        }
+    }
 }

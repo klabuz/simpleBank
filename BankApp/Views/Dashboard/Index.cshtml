@@ -15,18 +15,22 @@
         <ul class="dashboard-account-list">
             @foreach (var a in ViewBag.accounts)
             {
-                <li class="dashboard-account-item">
-                    <a href="@Url.Action("Details", "Account", new { accountId = @a.AccountId })">@a.Name</a> - $@a.Balance
-                    @if (ViewBag.accounts.Count > 1)
-                    {
-                        <span>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = @a.AccountId })</span>
-                    }
-                    <span>@Html.ActionLink("Pay", "Pay", "Dashboard", new { accountId = @a.AccountId })</span>
-                    @if (a.isMain == true)
-                    {
-                        <span>Zelle</span>
-                    }
-                </li>
+            <li class="dashboard-account-item">
+                <a href="@Url.Action("Details", "Account", new { accountId = @a.AccountId })">@a.Name</a> - $@a.Balance
+                @if (ViewBag.accounts.Count > 1)
+                {
+                    <span>@Html.ActionLink("Transfer", "Transfer", "Dashboard", new { accountId = @a.AccountId })</span>
+                }
+                <span>@Html.ActionLink("Pay", "Pay", "Dashboard", new { accountId = @a.AccountId })</span>
+                @if (a.isMain == true)
+                {
+                    <span>Zelle</span>
+                }
+                @if (a.Type == "Trading") 
+                { 
+                    <span>@Html.ActionLink("See Stocks", "StockDashboard", "Dashboard", new { accountId = @a.AccountId })</span>
+                }
+            </li>
             }
         </ul>
     }

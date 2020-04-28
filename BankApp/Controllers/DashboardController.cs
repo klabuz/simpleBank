@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
+using RestSharp;
 using SimpleBank.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
+using System.Net.Http;
 using System.Transactions;
 
 namespace SimpleBank.Controllers
@@ -90,6 +94,44 @@ namespace SimpleBank.Controllers
             var fromAccount = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
             ViewBag.account = fromAccount;
             return View();
+        }
+
+        [HttpGet]
+        [Route("stockdashboard/{accountId}")]
+        public IActionResult StockDashboard(Stock searchedStock, int accountId)
+        {
+            var fromAccount = _context.Accounts.Where(u => u.AccountId == accountId).SingleOrDefault();
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+            ViewBag.From = fromAccount;
+
+            var stock = searchedStock;
+            
+
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [Route("stockdashboard/{accountId}")]
+        public IActionResult StockDetails(StockViewModel stock)
+        {
+            StockSymbol SS = stock.SS;
+
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+            string stockSymbol = SS.Symbol;
+
+            var client = new RestClient("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-detail?region=US&lang=en&symbol=" + stockSymbol);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
+            request.AddHeader("x-rapidapi-key", "e5ea64e17emshfcf36b3cfdb9bfdp1113e0jsnb6675049f129");
+            IRestResponse searchedStock = client.Execute(request);
+
+            var deserializedStock = JsonConvert.DeserializeObject(searchedStock.Content);
+
+            ViewBag.stock = stock;
+
+            return RedirectToAction("StockDashboard", searchedStock);
         }
 
         public IActionResult Error()

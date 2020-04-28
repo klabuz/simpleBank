@@ -7,6 +7,7 @@ using SimpleBank.Models;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
 
 namespace SimpleBank.Controllers
 {

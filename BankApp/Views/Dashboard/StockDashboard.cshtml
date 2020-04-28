@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Stock Dashbaord";
+}
+@model SimpleBank.Models.Stock
+
+@Html.ActionLink("Back to account", "Details", "Account", new { accountId = ViewBag.From.AccountId })
+
+<div class="row">
+    <div class="col-sm-6">
+        <form asp-action="StockDetails" asp-controller="Account" method="post">
+            <h2>Find Stock by Symbol:</h2>
+
+            <div class="form-group">
+                <label for="SS.Symbol">Stock Symbol</label>
+                <input type="text" class="form-control" name="SS.Symbol">
+                <span class="text-danger" asp-validation-for="SS.Symbol"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>

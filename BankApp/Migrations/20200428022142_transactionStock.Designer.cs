@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleBank.Models;
 
 namespace SimpleBank.Migrations
 {
     [DbContext(typeof(SimpleBankContext))]
-    partial class SimpleBankContextModelSnapshot : ModelSnapshot
+    [Migration("20200428022142_transactionStock")]
+    partial class transactionStock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,65 +60,6 @@ namespace SimpleBank.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("SimpleBank.Models.Stock", b =>
-                {
-                    b.Property<int>("StockId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("StockId");
-
-                    b.ToTable("Stocks");
-                });
-
-            modelBuilder.Entity("SimpleBank.Models.StockTransaction", b =>
-                {
-                    b.Property<int>("StockTransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BuyerAccount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BuyerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Shares")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StockId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("StockTransactionId");
-
-                    b.HasIndex("StockId");
-
-                    b.ToTable("StockTransactions");
                 });
 
             modelBuilder.Entity("SimpleBank.Models.Transaction", b =>
@@ -215,13 +158,6 @@ namespace SimpleBank.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SimpleBank.Models.StockTransaction", b =>
-                {
-                    b.HasOne("SimpleBank.Models.Stock", null)
-                        .WithMany("StockTransactions")
-                        .HasForeignKey("StockId");
                 });
 
             modelBuilder.Entity("SimpleBank.Models.Transaction", b =>
