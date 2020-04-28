@@ -91,6 +91,7 @@
 
   <ItemGroup>
     <Folder Include="dist\images\" />
+    <Folder Include="Views\Trading\" />
   </ItemGroup>
 
 </Project>

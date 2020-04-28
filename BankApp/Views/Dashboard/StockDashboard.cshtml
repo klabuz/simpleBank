@@ -1,14 +1,14 @@
 ﻿@{
     ViewBag.Title = "Stock Dashbaord";
 }
-@model SimpleBank.Models.Stock
 
 @Html.ActionLink("Back to account", "Details", "Account", new { accountId = ViewBag.From.AccountId })
 
+<h2>Find Stock by Symbol:</h2>
+
 <div class="row">
     <div class="col-sm-6">
-        <form asp-action="StockDetails" asp-controller="Account" method="post">
-            <h2>Find Stock by Symbol:</h2>
+        <form asp-action="StockDetails" asp-controller="Dashboard" method="post">
 
             <div class="form-group">
                 <label for="SS.Symbol">Stock Symbol</label>
@@ -20,3 +20,10 @@
         </form>
     </div>
 </div>
+
+<h3>All Stocks</h3>
+@foreach (var s in ViewBag.allStocks)
+{
+    
+    <p><strong><a href="@Url.Action("StockDetails", "Dashboard", new { stockId = s.StockId, accountId = ViewBag.From.AccountId })">@s.Symbol</a></strong> - $@s.Price</p>
+}

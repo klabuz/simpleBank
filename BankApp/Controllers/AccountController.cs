@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using SimpleBank.Models;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Mail;
 
 namespace SimpleBank.Controllers
 {

@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Stock Dashbaord";
+}
+
+@Html.ActionLink("Back to market", "StockDashboard", "Dashboard", new { accountId = ViewBag.From.AccountId })
+
+<h2>@ViewBag.stock.Symbol</h2>
+<h4>@ViewBag.stock.Name</h4>
+<h2>@ViewBag.stock.Price</h2>
+

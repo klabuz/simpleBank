@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using SimpleBank.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
@@ -26,24 +28,20 @@ namespace SimpleBank.Controllers
         [Route("dashboard/{userId}")]
         public IActionResult Dashboard(int userId)
         {
-            var currentUser = _context.Users.Where(u => u.UserId == userId)
-                                            .SingleOrDefault();
-
             //Reads current user id from session
-            ViewBag.CurrentUserId = HttpContext.Session.GetInt32("UserId");
+            var currentUserId = HttpContext.Session.GetInt32("UserId");
 
-            if (currentUser != null)
+            if (currentUserId != null)
             {
-                ViewBag.UserId = currentUser.UserId;
-                ViewBag.UserName = currentUser.UserName;
+                ViewBag.UserId = currentUserId;
+                ViewBag.UserName = _context.Users.Where(u => u.UserId == currentUserId).SingleOrDefault().UserName;
             }
 
-            var accounts = _context.Accounts.Where(i => i.UserId == currentUser.UserId)
-                                            .ToList();
+            var accounts = _context.Accounts.Where(i => i.UserId == currentUserId).ToList();                                      
 
             ViewBag.accounts = accounts;
 
-            return View("Index", currentUser);
+            return View("Index");
         }
 
         [HttpGet]
@@ -96,25 +94,25 @@ namespace SimpleBank.Controllers
             return View();
         }
 
+
         [HttpGet]
         [Route("stockdashboard/{accountId}")]
-        public IActionResult StockDashboard(Stock searchedStock, int accountId)
+        public IActionResult StockDashboard(int accountId)
         {
-            var fromAccount = _context.Accounts.Where(u => u.AccountId == accountId).SingleOrDefault();
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+
+            var fromAccount = _context.Accounts.Where(u => u.AccountId == accountId).SingleOrDefault();
+            var allStocks = _context.Stocks.ToList();
+
             ViewBag.From = fromAccount;
+            ViewBag.allStocks = allStocks;
 
-            var stock = searchedStock;
-            
-
-
-            return View();
+            return View("StockDashboard", accountId);
         }
-
 
         [HttpPost]
         [Route("stockdashboard/{accountId}")]
-        public IActionResult StockDetails(StockViewModel stock)
+        public IActionResult StockDetails(StockViewModel stock, int accountId)
         {
             StockSymbol SS = stock.SS;
 
@@ -127,14 +125,55 @@ namespace SimpleBank.Controllers
             request.AddHeader("x-rapidapi-key", "e5ea64e17emshfcf36b3cfdb9bfdp1113e0jsnb6675049f129");
             IRestResponse searchedStock = client.Execute(request);
 
-            var deserializedStock = JsonConvert.DeserializeObject(searchedStock.Content);
+            var deserializedStock = JsonConvert.DeserializeObject<stockInfo>(searchedStock.Content);
 
-            ViewBag.stock = stock;
+            if (deserializedStock != null && deserializedStock.price != null)
+            {
+                var searchingStock = _context.Stocks.Where(s => s.Symbol == deserializedStock.symbol).SingleOrDefault();
+                int stockId = 0;
 
-            return RedirectToAction("StockDashboard", searchedStock);
+                if (searchingStock == null)
+                {
+                    Stock newStock = new Stock()
+                    {
+                        Name = deserializedStock.price.shortName,
+                        Symbol = deserializedStock.symbol.ToUpper(),
+                        Price = deserializedStock.price.regularMarketPrice.fmt
+                    };
+                    _context.Stocks.Add(newStock);
+                }
+                else
+                {
+                    searchingStock.Price = deserializedStock.price.regularMarketPrice.fmt;
+                    stockId = searchingStock.StockId;
+                }
+
+                _context.SaveChanges();
+
+                if(searchingStock == null && stockId == 0)
+                {
+                    stockId = _context.Stocks.Where(s => s.Symbol == deserializedStock.symbol).SingleOrDefault().StockId;
+                }
+
+                return RedirectToAction("StockDetails", new { stockId, accountId });
+            }
+
+            return RedirectToAction("StockDashboard", new { accountId });
         }
 
-        public IActionResult Error()
+        [HttpGet]
+        [Route("stockdetails/{stockId}/{accountId}")]
+        public IActionResult StockDetails(int stockId, int accountId)
+        {
+            var fromAccount = _context.Accounts.Where(u => u.AccountId == accountId).SingleOrDefault();
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
+            ViewBag.stock = _context.Stocks.Where(s => s.StockId == stockId).SingleOrDefault();
+            ViewBag.From = fromAccount;
+
+            return View();
+        }
+
+            public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }

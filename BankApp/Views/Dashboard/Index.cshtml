@@ -4,7 +4,7 @@
 @model SimpleBank.Models.User
 
 <div class="dashboard-layout">
-    <h3 class="dashboard-user-greetings">Hello, <span class="user-name">@Model.UserName</span>!</h3>
+    <h3 class="dashboard-user-greetings">Hello, <span class="user-name">@ViewBag.UserName</span>!</h3>
     <ul class="dashboard-action-list">
         <li class="dashboard-account-item">@Html.ActionLink("Open an account", "CreateAccount", "Dashboard")</li>
     </ul>
@@ -28,7 +28,7 @@
                 }
                 @if (a.Type == "Trading") 
                 { 
-                    <span>@Html.ActionLink("See Stocks", "StockDashboard", "Dashboard", new { accountId = @a.AccountId })</span>
+                    <span>@Html.ActionLink("Stock Market", "StockDashboard", "Dashboard", new { accountId = @a.AccountId })</span>
                 }
             </li>
             }
