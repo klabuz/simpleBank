@@ -22,7 +22,7 @@ else
 <form asp-action="StatementPDF" asp-controller="Account" method="post">   
     <input name="STAT.AccountId" value="@ViewBag.account.AccountId" hidden />
     <label for="STAT.startDate">From:</label><br>
-    <input type="date" name="STAT.startDate"><br>
+    <input type="date" name="STAT.startDate" value="@DateTime.Today.AddDays(-30).ToString("yyyy-MM-dd")"><br>
     <label for="STAT.endDate">To:</label><br>
     <input type="date" name="STAT.endDate" value="@DateTime.Today.ToString("yyyy-MM-dd")">
     <br /><br />
