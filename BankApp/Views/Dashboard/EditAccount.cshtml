@@ -4,28 +4,29 @@
 
 @model SimpleBank.Models.AccountViewModel
 
-@Html.ActionLink("Back to account", "Details", "Account", new { accountId = ViewBag.account.AccountId })
-<div class="row">
-    <div class="col-sm-6">
-        <h2>Edit @ViewBag.account.Name</h2>
-        <form asp-action="EditAccount" asp-controller="Account" method="post">
-            <div class="form-group">
-                <label for="EDI.Name">Account Name:</label>
-                <input type="text" class="form-control" name="EDI.Name" value="@ViewBag.account.Name">
-                <span class="text-danger" asp-validation-for="EDI.Name"></span>
-            </div>
-            <div class="form-group">
-                <label for="EDI.PIN">New PIN number:</label>
-                <input type="password" class="form-control" name="EDI.PIN">
-                <span class="text-danger" asp-validation-for="EDI.PIN"></span>
-            </div>
-            <div class="form-group">
-                <label for="EDI.PINConfirm">Confirm new PIN number:</label>
-                <span></span><input type="password" class="form-control" name="EDI.PINConfirm">
-                <span class="text-danger" asp-validation-for="EDI.PINConfirm"></span>
-            </div>
+    <p>@Html.ActionLink("Back to account", "Details", "Account", new { accountId = ViewBag.account.AccountId })</p>
+    <p>@Html.ActionLink("Close account", "CloseAccount", "Account", new { accountId = ViewBag.account.AccountId })</p>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Edit @ViewBag.account.Name</h2>
+            <form asp-action="EditAccount" asp-controller="Account" method="post">
+                <div class="form-group">
+                    <label for="EDI.Name">Account Name:</label>
+                    <input type="text" class="form-control" name="EDI.Name" value="@ViewBag.account.Name">
+                    <span class="text-danger" asp-validation-for="EDI.Name"></span>
+                </div>
+                <div class="form-group">
+                    <label for="EDI.PIN">New PIN number:</label>
+                    <input type="password" class="form-control" name="EDI.PIN">
+                    <span class="text-danger" asp-validation-for="EDI.PIN"></span>
+                </div>
+                <div class="form-group">
+                    <label for="EDI.PINConfirm">Confirm new PIN number:</label>
+                    <span></span><input type="password" class="form-control" name="EDI.PINConfirm">
+                    <span class="text-danger" asp-validation-for="EDI.PINConfirm"></span>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
     </div>
-</div>

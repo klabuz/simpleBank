@@ -111,6 +111,7 @@ namespace SimpleBank.Controllers
             var accounts = _context.Accounts.ToList();
             var transactions = _context.Transactions.Where(i => i.AccountId == accountId || i.ToAccountId == accountId).ToList();
             var users = _context.Users.ToList();
+            
 
             var transactionsHistory = (from t in transactions
                                        join a in accounts on t.ToAccountId equals a.AccountId
@@ -133,8 +134,23 @@ namespace SimpleBank.Controllers
                                            CreatedDate = t.CreatedDate
                                        }).ToList().OrderByDescending(d => d.CreatedDate);
 
+            string cardNumber = accountInfo.CardNumber;
+            string cardDisplay = "";
+            for(var i = 0; i<cardNumber.Length; i++)
+            {
+                if(i < 12)
+                {
+                    cardDisplay += "*";
+                }
+                else
+                {
+                    cardDisplay += cardNumber[i];
+                }
+            }
+
             ViewBag.transactions = transactionsHistory;
             ViewBag.account = accountInfo;
+            ViewBag.cardDisplay = cardDisplay;
 
             return View();
         }
@@ -332,6 +348,23 @@ namespace SimpleBank.Controllers
             document.Save(filename);
 
             return RedirectToAction("Details", "Account", new { accountId });
+        }
+
+        [HttpGet]
+        [Route("closeaccount/{accountId}")]
+        public IActionResult CloseAccount(int accountId)
+        {
+            var account = _context.Accounts.Where(i => i.AccountId == accountId).SingleOrDefault();
+
+            if(account.Balance > 0)
+            {
+                return RedirectToAction("EditAccount", "Account", new { accountId });
+            }
+
+            _context.Remove(account);
+            _context.SaveChanges();
+
+            return RedirectToAction("Dashboard", "Dashboard", new { accountId });
         }
 
         public IActionResult Error()
