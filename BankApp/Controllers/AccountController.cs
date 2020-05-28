@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
 using SimpleBank.Models;
 using System;
 using System.Diagnostics;
@@ -321,31 +319,7 @@ namespace SimpleBank.Controllers
                                        }).ToList().OrderByDescending(d => d.CreatedDate);
 
             // Create a new PDF document
-            PdfDocument document = new PdfDocument();
-            document.Info.Title = "Statement generated from simpleBank.";
 
-            // Create an empty page
-            PdfPage page = document.AddPage();
-
-            // Get an XGraphics object for drawing
-            XGraphics gfx = XGraphics.FromPdfPage(page);
-
-            // Create a font
-            XFont font14 = new XFont("Verdana", 14, XFontStyle.BoldItalic);
-            XFont font10 = new XFont("Verdana", 10, XFontStyle.BoldItalic);
-
-            // Draw the text
-            gfx.DrawString($"This is a {accountInfo.Name} account statement " +
-                $"from {startDate.ToShortDateString()} " +
-                $"to {endDate.ToShortDateString()}"
-            ,font14, XBrushes.Black,
-            new XRect(10, 10, page.Width, page.Height),
-            XStringFormats.TopLeft);
-            
-            // Save the document...
-            string filename = accountInfo.Name.Trim() + "_Statement_" + startDate.ToShortDateString().Trim().Replace('/','_') + ".pdf";
-            
-            document.Save(filename);
 
             return RedirectToAction("Details", "Account", new { accountId });
         }

@@ -10,6 +10,7 @@ namespace SimpleBank.Models
         [Key]
         public int StockId { get; set; }
         public string Price { get; set; }
+        public string PreMarketPrice { get; set; }
         public string Name { get; set; }
         public string Symbol { get; set; }
         public List<StockTransaction> StockTransactions { get; set; }

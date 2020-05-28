@@ -18,9 +18,16 @@ namespace SimpleBank.Models
         public string shortName { get; set; }
 
         public MarketPrice regularMarketPrice { get; set; }
+
+        public PreMarketPrice preMarketPrice { get; set; }
     }
 
     public class MarketPrice 
+    {
+        public string fmt { get; set; }
+    }
+
+    public class PreMarketPrice
     {
         public string fmt { get; set; }
     }

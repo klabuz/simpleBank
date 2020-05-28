@@ -24,6 +24,10 @@ namespace SimpleBank.Controllers
             _context = context;
         }
 
+        public DashboardController()
+        {
+        }
+
         [HttpGet]
         [Route("dashboard/{userId}")]
         public IActionResult Dashboard(int userId)
@@ -94,7 +98,6 @@ namespace SimpleBank.Controllers
             return View();
         }
 
-
         [HttpGet]
         [Route("stockdashboard/{accountId}")]
         public IActionResult StockDashboard(int accountId)
@@ -138,13 +141,15 @@ namespace SimpleBank.Controllers
                     {
                         Name = deserializedStock.price.shortName,
                         Symbol = deserializedStock.symbol.ToUpper(),
-                        Price = deserializedStock.price.regularMarketPrice.fmt
+                        Price = deserializedStock.price.regularMarketPrice.fmt,
+                        PreMarketPrice = deserializedStock.price.preMarketPrice.fmt
                     };
                     _context.Stocks.Add(newStock);
                 }
                 else
                 {
                     searchingStock.Price = deserializedStock.price.regularMarketPrice.fmt;
+                    searchingStock.PreMarketPrice = deserializedStock.price.preMarketPrice.fmt;
                     stockId = searchingStock.StockId;
                 }
 
@@ -166,13 +171,21 @@ namespace SimpleBank.Controllers
         public IActionResult StockDetails(int stockId, int accountId)
         {
             var fromAccount = _context.Accounts.Where(u => u.AccountId == accountId).SingleOrDefault();
+            var stockInfo = _context.Stocks.Where(s => s.StockId == stockId).SingleOrDefault();
+
             ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
-            ViewBag.stock = _context.Stocks.Where(s => s.StockId == stockId).SingleOrDefault();
+            ViewBag.stock = stockInfo;
             ViewBag.From = fromAccount;
 
             return View();
         }
 
+        //Simple calculator method for unit testing
+        public int Add(int x, int y)
+        {
+            return x + y;
+        }
+            
             public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
