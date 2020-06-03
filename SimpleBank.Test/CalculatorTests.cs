@@ -19,5 +19,17 @@ namespace SimpleBank.Test
             // assert
             Assert.Equal(actual, expected);
         }
+
+
+        [Theory]
+        [InlineData("konrad", "darnok")]
+        public void Reverse_SimplyReverseGivenString(string str, string reversedString)
+        {
+            // act
+            string actual = _dashboardController.ReverseString(str);
+
+            // assert
+            Assert.Equal(actual, reversedString);
+        }
     }
 }

@@ -185,7 +185,20 @@ namespace SimpleBank.Controllers
         {
             return x + y;
         }
-            
+
+        public string ReverseString(string str)
+        {
+            string reversedStr = "";
+
+            for(var i = str.Length-1; i >= 0; i--)
+            {
+                reversedStr += str[i];
+            }
+
+            return reversedStr;
+        }
+
+
             public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

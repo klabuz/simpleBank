@@ -33,7 +33,7 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="dist\favicon.ico" />
-    <Content Include="gulp\gulpfile.js" />
+    <Content Include="gulpfile.js" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css.map" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-grid.min.css" />
